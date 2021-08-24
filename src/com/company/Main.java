@@ -65,7 +65,7 @@ public class Main {
             System.out.println(Constantes.VALOR_PORCENTAJE_FIJO + ce.getPOR_FIJO());
             System.out.println(Constantes.MONTO_ENDEUDAMIENTO + ce.getCapacidadEndeudamiento());
 
-            // Preguntar al usuario si desea continuar.
+            // Preguntar al usuario si desea continuar ingresado datos.
             System.out.println(Constantes.LINEA_BLANCO);
             System.out.print(Constantes.CONTINUAR);
             entrada = in.nextLine();
