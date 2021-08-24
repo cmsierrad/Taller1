@@ -1,34 +1,95 @@
 package com.company;
 
 import clases.CapacidadEndedudamiento;
-import javafx.scene.input.KeyCode;
-
+import clases.Constantes;
 import java.util.Scanner;
 
 public class Main {
-    //Recuerda que aca empieza todo
+
     public static void main(String[] args) {
-        //Con este objeto de la clase Scanner puedes capturar informacion por consola cada ves que lo uses
-        // recuerda cerrar el flujo de consulta cada ves lo uses sobre para que los uses in.close()
         Scanner in = new Scanner(System.in);
 
-        int ingMesuales;
-        System.out.println("Ingrese sus ingresos mensuales");
-
         String entrada = "SI";
-        while (entrada.equals("SI")) {
-            System.out.println("Ingrese sus gastos fijos");
-            System.out.println("Ingrese sus gastos variable");
-            //Esto te dara la primera entrada al proceso de solicitar los datos para instancir nuestro objeto
-            // CapacidadEndedudamiento()
-            //Valida las entradas de los usuarios que no vayas a convertir una "A" numero y el calculo no te funcione
-            //Utiliza el metodo is numeric para vada entrada de ser necesarios
+        boolean correcto;
+
+        while (entrada.equalsIgnoreCase("SI")) {
+            int ingMesuales = 0;
+            int gastosFijos = 0;
+            int gastosVariables = 0;
+            String entradaUsuario;
+
+            // Instancia de la clase Endeudamiento.
+            CapacidadEndedudamiento ce = new CapacidadEndedudamiento();
+
+            // Preguntar al usuario el valor de los Ingresos Mensuales.
+            correcto = true;
+            do {
+                System.out.print(Constantes.MONTO_INGRESOS_MENSUALES);
+                entradaUsuario = in.nextLine();
+                if (isNumeric(entradaUsuario)) {
+                    ingMesuales = Integer.parseInt(entradaUsuario);
+                    correcto = false;
+                }
+                ce.setIngresosTotales(ingMesuales);
+            } while (correcto);
+
+            // Preguntar al usuario el valor de los Gastos Fijos.
+            correcto = true;
+            do {
+                System.out.print(Constantes.MONTO_GASTOS_FIJOS);
+                entradaUsuario = in.nextLine();
+                if (isNumeric(entradaUsuario)){
+                    gastosFijos = Integer.parseInt(entradaUsuario);
+                    correcto = false;
+                }
+                ce.setGastosFijos(gastosFijos);
+            } while (correcto);
+
+            // Preguntar al usuario el valor de los Gastos Variables.
+            correcto = true;
+            do {
+                System.out.print(Constantes.MONTO_GASTOS_VARIABLES);
+                entradaUsuario = in.nextLine();
+                if (isNumeric(entradaUsuario)){
+                    gastosVariables = Integer.parseInt(entradaUsuario);
+                    correcto = false;
+                }
+                ce.setGastoVaribales(gastosVariables);
+            } while (correcto);
+
+            // Mostrar cálculo del Endeudamiento y valores para su cálculo.
+            System.out.println(Constantes.LINEA_BLANCO);
+            System.out.println(Constantes.VALOR_INGRESOS_MENSUALES + ce.getIngresosTotales());
+            System.out.println(Constantes.VALOR_GASTOS_FIJOS + ce.getGastosFijos());
+            System.out.println(Constantes.VALOR_GASTOS_VARIABLES + ce.getGastoVaribales());
+            System.out.println(Constantes.VALOR_PORCENTAJE_FIJO + ce.getPOR_FIJO());
+            System.out.println(Constantes.MONTO_ENDEUDAMIENTO + ce.getCapacidadEndeudamiento());
+
+            // Preguntar al usuario si dedea continuar.
+            System.out.println(Constantes.LINEA_BLANCO);
+            System.out.print(Constantes.CONTINUAR);
+            entrada = in.nextLine();
+        }
+        in.close();
+    }
+
+    // Valida que el valor ingresado sea numérico y mayor de cero.
+    public static boolean isNumeric(String value) {
+        try {
+            if (Double.parseDouble(value) > 0) {
+                return true;
+            }else{
+                System.out.println(Constantes.ERROR_NUMERO_NEGATIVO);
+                return false;
+            }
+        }
+
+        catch (NumberFormatException e) {
+            System.out.println(Constantes.ERROR_NO_NUMERICO);
+            return false;
         }
     }
-
-    public static boolean isNumeric(String value) {
-        // implementa un bloque try catch aca
-        Double.parseDouble(value);
-
-    }
 }
+
+
+
